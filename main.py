@@ -27,28 +27,7 @@ connection = MySQLdb.connect(
   }
 
 )
-
-
-
 app = FastAPI()
-
-
-class Student(BaseModel):
-    id: int
-    name: str
-    age: int
-    email: str
-
-students = [
-    {
-        "id": 0,
-        "name": "Pedro",
-        "age": 20,
-        "email": "pedro.laraburu@example.com"
-    }
-]
-
-
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
