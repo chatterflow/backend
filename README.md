@@ -15,11 +15,15 @@ Manter um histórico de todas as mensagens enviadas e recebidas pelos compradore
 Permitir que os compradores reportem problemas relacionados ao pedido, como produtos danificados ou entregas atrasadas, e permitir que os vendedores respondam e resolvam esses problemas de forma eficiente.
 
 Total: 12 pontos
-
 # Setup
 ```
+#Create a virtual environment in the current directory
 python -m venv .venv
+#Activate the virtual environment
+source .venv/bin/activate
+#Install dependencies
 pip install -r requirements.txt
+#Run 
 python main.py
 ```
 
