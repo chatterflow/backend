@@ -17,16 +17,12 @@ Permitir que os compradores reportem problemas relacionados ao pedido, como prod
 Total: 12 pontos
 # Setup
 ```
-#Create a virtual environment in the current directory
+# Create a virtual environment in the current directory
 python -m venv .venv
-#Activate the virtual environment
+# Activate the virtual environment
 source .venv/bin/activate
-#Install dependencies
+# Install dependencies
 pip install -r requirements.txt
-#Run 
+# Run 
 python main.py
 ```
-
-# Database 
-
-<img src="https://i.imgur.com/jGoaea8.png">
