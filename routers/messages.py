@@ -1,17 +1,17 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import HTTPException, APIRouter
 from core.schemas.messageSchema import Message
 from core.database.database import db
 from datetime import *
 
-app = FastAPI()
+router = APIRouter()
 
 
-@app.get("/")
+@router.get("/")
 async def root():
     return {"message": "Work in progress"}
 
 
-@app.get("/thread/{id}")
+@router.get("/thread/{id}")
 async def get_thread_by_id(id: str):
     message = db.get(id)
     if message:
@@ -19,7 +19,7 @@ async def get_thread_by_id(id: str):
     raise HTTPException(status_code=404, detail="Thread not found")
 
 
-@app.post("/send_first_message")
+@router.post("/send_first_message")
 async def send_first_message(sender_id: str, receiver_id: str, messageData: Message):
     nThread = {
         "participants": [sender_id, receiver_id],
@@ -36,7 +36,7 @@ async def send_first_message(sender_id: str, receiver_id: str, messageData: Mess
     return {'message': 'Message sent sucessfully'}
 
 
-@app.post("/send_message")
+@router.post("/send_message")
 async def send_message(thread_id: str, sender_id: str, messageData: Message):
     thread = db.fetch({"key": thread_id})
     if not thread.items:
