@@ -1,6 +1,6 @@
 from fastapi import HTTPException, APIRouter
 from core.schemas.messageSchema import Message
-from core.database.database import db
+from core.database.chatdb import db
 from datetime import *
 
 router = APIRouter()
