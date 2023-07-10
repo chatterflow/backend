@@ -1,22 +1,33 @@
-# Comunicação vendedor-comprador
-Este microsserviço gerencia a comunicação entre comprador e vendedor para acertarem os detalhes da compra e para tirar dúvidas do cliente.
+# ChatterFlow
+ChatterFlow is a real-time messaging API service built with Python, FastAPI, and CockroachDB. It is designed to facilitate smooth, real-time chats while preserving all the history of the conversation.
+Features
 
-# Mensagens (3 pontos)
-Permitir que os compradores e vendedores enviem mensagens uns aos outros por meio da plataforma, garantindo que todas as informações relevantes sejam mantidas no mesmo lugar e que a comunicação seja transparente.
+- Real-Time Communication: ChatterFlow enables users to chat in real time, providing instant exchange of messages.
+- Conversation History: With ChatterFlow, every chat's history is stored and can be retrieved at any time, ensuring no conversation details are ever lost.
+- Robust and Scalable: Built on CockroachDB, ChatterFlow is designed to scale easily while ensuring data consistency.
+- Fast and Efficient: ChatterFlow utilizes the power of FastAPI to provide a fast, efficient, and easy-to-use solution.
 
-6 pontos caso a comunicação seja feita em tempo-real.
-# Notificações (4 pontos)
-Enviar notificações aos compradores e vendedores quando novas mensagens são recebidas ou quando ocorrem mudanças no status do pedido, garantindo que eles sejam informados sobre as atividades relevantes.
+# Technologies
 
-# Histórico de mensagens (2 pontos)
-Manter um histórico de todas as mensagens enviadas e recebidas pelos compradores e vendedores, permitindo que eles revisitem as conversas quando necessário.
+ChatterFlow is powered by several prominent technologies:
 
-# Gerenciamento de problemas (3 pontos)
-Permitir que os compradores reportem problemas relacionados ao pedido, como produtos danificados ou entregas atrasadas, e permitir que os vendedores respondam e resolvam esses problemas de forma eficiente.
+- Python: A popular, versatile high-level programming language.
+- FastAPI: A modern, fast (high-performance), web framework for building APIs with Python 3.6+ based on standard Python type hints.
+- CockroachDB: A cloud-native, distributed SQL database that provides next-level consistency, scalability, and resilience.
 
-Total: 12 pontos
+# Getting Started
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+## Prerequisites
+
+What you need to install:
+- Python 3.8 or newer
+- FastAPI
+- CockroachDB
+
 # Setup
 ```
+# Clone this repo
+git clone https://github.com/chatterflow/backend
 # Create a virtual environment in the current directory
 python -m venv .venv
 # Activate the virtual environment
