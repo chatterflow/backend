@@ -61,7 +61,7 @@ async def get(request_form_user: OAuth2PasswordRequestForm = Depends(), db: Asyn
 
 
 @router.get("/user/authenticate")  # Endpoint to authenticate the user
-async def getData(token: str, db: AsyncSession = Depends(get_session)):
+async def get_data(token: str, db: AsyncSession = Depends(get_session)):
     try:
         user = await UserRepository(db).verify_token(token)
         return user
