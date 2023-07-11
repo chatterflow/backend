@@ -46,3 +46,24 @@ async def create(user: User, db: AsyncSession = Depends(get_session)):
         raise HTTPException(status_code=406, detail=str(error))
     except DatabaseError as error:
         raise HTTPException(status_code=500, detail=str(error))
+
+
+@router.post("/user/login")  # Endpoint for login call
+async def get(request_form_user: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = Depends(get_session)):
+    try:
+        user = await UserRepository(db).user_login(request_form_user.username, request_form_user.password)
+        return JSONResponse(
+            content=user,
+            status_code=status.HTTP_200_OK
+        )
+    except NotFoundError as error:
+        raise HTTPException(status_code=404, detail=str(error))
+
+
+@router.get("/user/authenticate")  # Endpoint to authenticate the user
+async def getData(token: str, db: AsyncSession = Depends(get_session)):
+    try:
+        user = await UserRepository(db).verify_token(token)
+        return user
+    except NotFoundError as error:
+        raise HTTPException(status_code=404, detail=str(error))
