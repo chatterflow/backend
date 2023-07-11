@@ -1,6 +1,6 @@
 from sqlalchemy import Column, ForeignKey, String, Date, DateTime
 from sqlalchemy.orm import relationship
-from core.database.configs import settings
+from src.core.database.configs import settings
 import datetime
 
 class User(settings.DBBaseModel):

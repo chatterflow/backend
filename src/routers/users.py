@@ -1,11 +1,11 @@
 from fastapi import Depends, HTTPException, status, APIRouter
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse
-from core.errors.errors import DatabaseError, DuplicateEntryError, NotFoundError
-from core.schemas.schemas import User
+from src.core.errors.errors import DatabaseError, DuplicateEntryError, NotFoundError
+from src.core.schemas.schemas import User
 from sqlalchemy.ext.asyncio import AsyncSession
-from core.database.database import get_session
-from core.repositories.user_repository import UserRepository
+from src.core.database.database import get_session
+from src.core.repositories.user_repository import UserRepository
 
 router = APIRouter()
 
