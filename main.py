@@ -1,8 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
-from routers import messages, reports
 from fastapi.middleware.cors import CORSMiddleware
-
+from core.database.database import check_database_connection
 app = FastAPI()
 
 origins = [
@@ -19,10 +18,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.on_event("startup")
+async def startup_event():
+    if not await check_database_connection():
+        raise RuntimeError("Failed to connect to the database")
 
-# Routes
-app.include_router(messages.router, tags=(["Mensagens"]), prefix="/messages")
-app.include_router(reports.router, tags=(["Problemas"]), prefix="/reports")
+@app.get("/")
+async def hello():
+    return {"Hello world"}
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="localhost", port=8000, reload=True)
