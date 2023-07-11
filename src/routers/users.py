@@ -1,0 +1,48 @@
+from fastapi import Depends, HTTPException, status, APIRouter
+from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.responses import JSONResponse
+from core.errors.errors import DatabaseError, DuplicateEntryError, NotFoundError
+from core.schemas.schemas import User
+from sqlalchemy.ext.asyncio import AsyncSession
+from core.database.database import get_session
+from core.repositories.user_repository import UserRepository
+
+router = APIRouter()
+
+
+@router.get("/user")  # Endpoint to get a single user based on the id
+async def get(userId: str, db: AsyncSession = Depends(get_session)):
+    try:
+        user = await UserRepository(db).get(userId)
+        return user
+    except NotFoundError as error:
+        raise HTTPException(status_code=404, detail=str(error))
+
+
+@router.get("/user/email")  # Endpoint to get a single user based on the email
+async def get(userEmail: str, db: AsyncSession = Depends(get_session)):
+    try:
+        user = await UserRepository(db).getViaEmail(userEmail)
+        return user
+    except NotFoundError as error:
+        raise HTTPException(status_code=404, detail=str(error))
+
+
+@router.get("/users")  # Endpoint to get all users
+async def get(db: AsyncSession = Depends(get_session)):
+    try:
+        user = await UserRepository(db).select_everything()
+        return user
+    except NotFoundError as error:
+        raise HTTPException(status_code=404, detail=str(error))
+
+
+@router.post("/users")  # Endpoint to register a user
+async def create(user: User, db: AsyncSession = Depends(get_session)):
+    try:
+        newUser = await UserRepository(db).create(user)
+        return newUser
+    except DuplicateEntryError as error:
+        raise HTTPException(status_code=406, detail=str(error))
+    except DatabaseError as error:
+        raise HTTPException(status_code=500, detail=str(error))
