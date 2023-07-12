@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.core.database.database import check_database_connection
-from src.routers import users, auth, threads
+from src.routers import users, auth, threads, messages
 app = FastAPI()
 
 origins = [
@@ -31,6 +31,7 @@ async def hello():
 # Routes
 app.include_router(users.router, tags=(["Users"]))
 app.include_router(threads.router, tags=(["Threads"]))
+app.include_router(messages.router, tags=(["Messages"]))
 app.include_router(auth.router, tags=(['Authorize Router']))
 
 
