@@ -12,17 +12,17 @@ Features
 ChatterFlow is powered by several prominent technologies:
 
 - Python: A popular, versatile high-level programming language.
-- FastAPI: A modern, fast (high-performance), web framework for building APIs with Python 3.6+ based on standard Python type hints.
+- FastAPI: A modern, fast (high-performance), web framework for building APIs with Python 3.8+ based on standard Python type hints.
 - CockroachDB: A cloud-native, distributed SQL database that provides next-level consistency, scalability, and resilience.
 
 # Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 ## Prerequisites
 
-What you need to install:
+What you need:
 - Python 3.8 or newer
 - FastAPI
-- CockroachDB
+- CockroachDB account and database
 
 # Setup
 ```
