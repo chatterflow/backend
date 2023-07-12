@@ -23,7 +23,7 @@ async def select_everything(db: AsyncSession, model: Any):
         result = await session.execute(query)
         return result.scalars().all()
 
-async def select_value_or(db: AsyncSession, Thread: Any, User: Any, column1: Column, value1: Any, column2: Column): #
+async def select_value_or(db: AsyncSession, Thread: Any, User: Any, column1: Column, value1: Any, column2: Column):
     subquery = select(
         Thread.id.label('thread_id'),
         case(
@@ -56,7 +56,7 @@ async def select_value_or(db: AsyncSession, Thread: Any, User: Any, column1: Col
         return result_list
 		
 
-async def select_value_and_or(db: AsyncSession, model: Any, column1: Column, value1: Any, column2: Column, value2: Any): # 
+async def select_value_and_or(db: AsyncSession, model: Any, column1: Column, value1: Any, column2: Column, value2: Any): 
     async with db as session:
         query = select(model).where(or_(and_(column1 == value1, column2 == value2), and_(
             column1 == value2, column2 == value1)))
@@ -65,7 +65,7 @@ async def select_value_and_or(db: AsyncSession, model: Any, column1: Column, val
         return resultValue
 		
 
-async def value_exists_and_or(db: AsyncSession, model: Any, column1: Column, value1: Any, column2: Column, value2: Any) -> bool: #
+async def value_exists_and_or(db: AsyncSession, model: Any, column1: Column, value1: Any, column2: Column, value2: Any) -> bool:
     async with db as session:
         consulta = select(exists().where(or_(and_(column1 == value1, column2 == value2), and_(
             column1 == value2, column2 == value1)))).select_from(model)
@@ -79,3 +79,10 @@ async def delete_value(db: AsyncSession, model: Any, column: Column, value: Any)
         result = await session.execute(query)
         await session.commit()
         return result.rowcount
+
+async def select_value_all_order_by(db: AsyncSession, model: Any, column: Column, value: Any, order_column: Column):
+    async with db as session:
+        query = select(model).filter(column == value).order_by(order_column)
+        result = await session.execute(query)
+        resultValue = result.scalars().all()
+        return resultValue
