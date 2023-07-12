@@ -9,8 +9,8 @@ from src.core.repositories.user_repository import UserRepository
 
 router = APIRouter()
 
-
-@router.get("/user")  # Endpoint to get a single user based on the id
+ # Endpoint to get a single user based on the id
+@router.get("/user/id/{userId}") 
 async def get(userId: str, db: AsyncSession = Depends(get_session)):
     try:
         user = await UserRepository(db).get(userId)
@@ -18,17 +18,17 @@ async def get(userId: str, db: AsyncSession = Depends(get_session)):
     except NotFoundError as error:
         raise HTTPException(status_code=404, detail=str(error))
 
-
-@router.get("/user/email")  # Endpoint to get a single user based on the email
+ # Endpoint to get a single user based on the email
+@router.get("/user/email/{userEmail}") 
 async def get(userEmail: str, db: AsyncSession = Depends(get_session)):
     try:
-        user = await UserRepository(db).getViaEmail(userEmail)
+        user = await UserRepository(db).get_by_email(userEmail)
         return user
     except NotFoundError as error:
         raise HTTPException(status_code=404, detail=str(error))
 
-
-@router.get("/users")  # Endpoint to get all users
+# Endpoint to get all users
+@router.get("/users")  
 async def get(db: AsyncSession = Depends(get_session)):
     try:
         user = await UserRepository(db).select_everything()
@@ -36,8 +36,8 @@ async def get(db: AsyncSession = Depends(get_session)):
     except NotFoundError as error:
         raise HTTPException(status_code=404, detail=str(error))
 
-
-@router.post("/users")  # Endpoint to register a user
+# Endpoint to register a user
+@router.post("/user")  
 async def create(user: User, db: AsyncSession = Depends(get_session)):
     try:
         newUser = await UserRepository(db).create(user)
@@ -47,8 +47,8 @@ async def create(user: User, db: AsyncSession = Depends(get_session)):
     except DatabaseError as error:
         raise HTTPException(status_code=500, detail=str(error))
 
-
-@router.post("/user/login")  # Endpoint for login call
+# Endpoint for login call
+@router.post("/user/login")  
 async def get(request_form_user: OAuth2PasswordRequestForm = Depends(), db: AsyncSession = Depends(get_session)):
     try:
         user = await UserRepository(db).user_login(request_form_user.username, request_form_user.password)
@@ -59,8 +59,8 @@ async def get(request_form_user: OAuth2PasswordRequestForm = Depends(), db: Asyn
     except NotFoundError as error:
         raise HTTPException(status_code=404, detail=str(error))
 
-
-@router.get("/user/authenticate")  # Endpoint to authenticate the user
+# Endpoint to authenticate the user
+@router.get("/user/authenticate")  
 async def get_data(token: str, db: AsyncSession = Depends(get_session)):
     try:
         user = await UserRepository(db).verify_token(token)

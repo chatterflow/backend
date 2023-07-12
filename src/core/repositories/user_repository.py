@@ -2,7 +2,7 @@ from fastapi import HTTPException, status
 from src.core.schemas import schemas
 from src.core.models.models import User
 from src.core.dto.dto import CreateUserOutput
-from src.core.utils.utils import value_exists, selectValue, selectEverything
+from src.core.utils.utils import value_exists, select_value, select_everything
 from src.core.errors.errors import DuplicateEntryError, DatabaseError, NotFoundError
 from src.core.database.hash_passwords import hash_password, password_verify
 from datetime import datetime, timedelta
@@ -65,32 +65,32 @@ class UserRepository:
             await session.rollback()
             print(f"Error when inserting data into the database: {str(error)}")
             raise DatabaseError(
-                f"Errir when inserting user data into the database: {str(error)}")
+                f"Error when inserting user data into the database: {str(error)}")
 
     # Function to get the user
     async def get(self, userId: str):
-        user = await selectValue(self.db, User, User.id, userId)
+        user = await select_value(self.db, User, User.id, userId)
         if not user:
             raise NotFoundError('User not found')
         return user
 
     # Function to get the user by the email
     async def get_by_email(self, userEmail: str):
-        user = await selectValue(self.db, User, User.email, userEmail)
+        user = await select_value(self.db, User, User.email, userEmail)
         if not user:
             raise NotFoundError('User not found')
         return user
 
     # SELECT * from users
     async def select_everything(self):
-        user = await selectEverything(self.db, User)
+        user = await select_everything(self.db, User)
         if not user:
             raise NotFoundError('Something went wrong')
         return user
 
     # Function that generates the jwt token
     async def user_login(self, userEmail: str, passwordU: str, expires_in: int = (24 * 60 * 7)):
-        user = await selectValue(self.db, User, User.email, userEmail)
+        user = await select_value(self.db, User, User.email, userEmail)
         if not user:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED, detail='User or password are wrong')
@@ -121,7 +121,7 @@ class UserRepository:
                 detail='Invalid access token'
             )
 
-        user_on_db = await selectValue(self.db, User, User.email, data['sub'])
+        user_on_db = await select_value(self.db, User, User.email, data['sub'])
 
         if user_on_db is None:
             raise HTTPException(
