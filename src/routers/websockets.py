@@ -18,7 +18,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: str, thread_id: st
         while True:
             data = await websocket.receive_json()
             msg_data = Message(**data)
-            newMsg = await MessageRepository(db).createMessage(msg_data)
+            newMsg = await MessageRepository(db).create_message(msg_data)
             json_compatible_item_data = jsonable_encoder(newMsg)
             await manager.broadcast(json.dumps(json_compatible_item_data), thread_id)
     except WebSocketDisconnect:
