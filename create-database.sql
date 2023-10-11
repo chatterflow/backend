@@ -1,9 +1,3 @@
-/* SQL Export using CockroachDB SQL Migration Tool */
-
--- Statement 1
-SET default_int_size = 8;
-
--- Statement 2
 CREATE TABLE users (
 	id VARCHAR(255) PRIMARY KEY,
 	nome_completo VARCHAR(255),
