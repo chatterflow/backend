@@ -1,6 +1,5 @@
 default: 
 	@echo "Available commands:"
-	@echo "make secretkey       - Generate secret key"
 	@echo "make build           - Create containers and create .env file"
 	@echo "make start           - Initialize containers DB and FastAPI"
 	@echo "make stop            - Stop containers"
@@ -8,6 +7,11 @@ default:
 
 build:
 ifeq ("$(wildcard .env)","") 
+	@SECRET_KEY="$$(openssl rand -hex 32)"; \
+	if [ -f .env.example ]; then \
+		echo "\nSECRET_KEY = '$$SECRET_KEY'" >> .env.example; \
+		echo "Secret key added to .env.example"; \
+	fi
 	cp .env.example .env
 	@echo "#####____________________________________________________________________New .env file created" 
 endif
@@ -21,7 +25,3 @@ stop:
 
 delete: 
 	docker-compose -f docker-compose.yml down 
-
-secretkey: 
-	@echo "Secret key created" 
-	openssl rand -hex 32
